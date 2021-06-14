@@ -6,12 +6,6 @@ import static org.fusesource.jansi.Ansi.ansi;
 
 public class ConsoleHand {
 
-    private Hand hand;
-
-    public ConsoleHand(Hand hand) {
-        this.hand = hand;
-    }
-
     static String displayFirstCard(Hand hand) {
         return ConsoleCard.display(hand.cards().get(0));
     }
