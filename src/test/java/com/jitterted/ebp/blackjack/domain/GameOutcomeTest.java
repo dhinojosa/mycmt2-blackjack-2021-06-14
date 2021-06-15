@@ -26,4 +26,14 @@ public class GameOutcomeTest {
 
         assertThat(game.determineOutcome()).isEqualTo(GameOutcome.PLAYER_BEATS_DEALER);
     }
+
+    @Test
+    void testPlayerWinsWithBlackjack() {
+        Deck fakeDeck =
+            new StubDeck(Rank.KING, Rank.FIVE, Rank.ACE, Rank.TEN);
+        Game game = new Game(fakeDeck);
+        game.initialDeal();
+        game.playerStands();
+        assertThat(game.determineOutcome()).isEqualTo(GameOutcome.BLACKJACK);
+    }
 }
