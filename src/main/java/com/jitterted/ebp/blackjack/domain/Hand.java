@@ -44,7 +44,7 @@ public class Hand {
         cards.add(deck.draw());
     }
 
-    boolean isBusted() {
+    public boolean isBusted() {
         return value() > 21;
     }
 
@@ -56,7 +56,7 @@ public class Hand {
         return hand.value() < value();
     }
 
-    String displayValue() {
+    public String displayValue() {
         return String.valueOf(value());
     }
 
