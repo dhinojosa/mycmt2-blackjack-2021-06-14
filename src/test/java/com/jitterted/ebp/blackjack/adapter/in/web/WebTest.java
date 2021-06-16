@@ -18,4 +18,11 @@ public class WebTest {
         mockMvc.perform(get("/index.html"))
                .andExpect(status().isOk());
     }
+
+    @Test
+    public void testStartGameWillReturn200OK() throws Exception {
+        mockMvc.perform(post("/start-game"))
+               .andExpect(status().isOk());
+
+    }
 }
