@@ -14,6 +14,6 @@ public class WebTest {
     @Test
     public void testIndexReturns200OK() throws Exception {
         mockMvc.perform(get("/index.html"))
-               .andExpect(status().isOk())
+               .andExpect(status().isOk());
     }
 }
