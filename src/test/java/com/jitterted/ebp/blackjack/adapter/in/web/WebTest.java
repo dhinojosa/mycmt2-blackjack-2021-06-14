@@ -23,6 +23,5 @@ public class WebTest {
     public void testStartGameWillReturn200OK() throws Exception {
         mockMvc.perform(post("/start-game"))
                .andExpect(status().isOk());
-
     }
 }

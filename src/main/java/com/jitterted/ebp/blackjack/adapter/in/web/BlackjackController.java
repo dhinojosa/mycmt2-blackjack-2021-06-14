@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class BlackjackController {
 
-    @PostMapping
+    @PostMapping("/start-game")
     public String startGame() {
         return "blackjack";
     }
