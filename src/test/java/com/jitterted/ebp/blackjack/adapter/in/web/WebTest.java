@@ -1,5 +1,6 @@
 package com.jitterted.ebp.blackjack.adapter.in.web;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -22,6 +23,14 @@ public class WebTest {
     @Test
     public void testStartGameWillReturn200OK() throws Exception {
         mockMvc.perform(post("/start-game"))
+               .andExpect(status().is3xxRedirection())
+               .andExpect(redirectedUrl("/game"));
+    }
+
+    @Test
+    @Disabled
+    public void testWhenHitIsDoneWeGetARedirect() throws Exception {
+        mockMvc.perform(post("/hit"))
                .andExpect(status().is3xxRedirection())
                .andExpect(redirectedUrl("/game"));
     }

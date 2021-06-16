@@ -13,19 +13,23 @@ public class BlackjackControllerTest {
 
     @Test
     void testInitialCardsAreDealt() {
-         Game game = new Game();
-         BlackjackController blackjackController = new BlackjackController(() -> game);
-         blackjackController.startGame();
-         assertThat(game.playerHand().cards()).hasSize(2);
-         assertThat(game.dealerHand().cards()).hasSize(2);
+        Game game = new Game();
+        BlackjackController blackjackController =
+            new BlackjackController(() -> game);
+        blackjackController.startGame();
+        assertThat(game.playerHand().cards()).hasSize(2);
+        assertThat(game.dealerHand().cards()).hasSize(2);
     }
 
     @Test
     void testThatWeHaveAModelToDisplayCards() {
         Game game = new Game(
-            new StubDeck(List.of(new Card(Suit.CLUBS, Rank.QUEEN), new Card(Suit.CLUBS, Rank.THREE),
-                new Card(Suit.HEARTS, Rank.KING), new Card(Suit.SPADES, Rank.TEN))));
-        BlackjackController blackjackController = new BlackjackController(() -> game);
+            new StubDeck(List.of(new Card(Suit.CLUBS, Rank.QUEEN),
+                new Card(Suit.CLUBS, Rank.THREE),
+                new Card(Suit.HEARTS, Rank.KING), new Card(Suit.SPADES,
+                    Rank.TEN))));
+        BlackjackController blackjackController =
+            new BlackjackController(() -> game);
         blackjackController.startGame();
 
         Model model = new ConcurrentModel();
@@ -34,5 +38,15 @@ public class BlackjackControllerTest {
         assertThat(gameView).isNotNull();
         assertThat(gameView.getDealerCards()).containsExactly("3♣", "10♠");
         assertThat(gameView.getPlayerCards()).containsExactly("Q♣", "K♥");
+    }
+
+    @Test
+    void testPlayerHitsAndWeGetThreeCards() {
+        Game game = new Game();
+        BlackjackController blackjackController =
+            new BlackjackController(() -> game);
+        blackjackController.startGame();
+        blackjackController.hitCommand();
+        assertThat(game.playerHand().cards()).hasSize(3);
     }
 }
