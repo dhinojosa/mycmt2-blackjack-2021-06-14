@@ -1,6 +1,7 @@
 package com.jitterted.ebp.blackjack.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 
 public class StubDeck extends Deck {
@@ -13,6 +14,10 @@ public class StubDeck extends Deck {
             cards.add(new Card(Suit.DIAMONDS, rank));
         }
         this.iterator = cards.listIterator();
+    }
+
+    public StubDeck(List<Card> es) {
+        this.iterator = es.listIterator();
     }
 
     @Override
