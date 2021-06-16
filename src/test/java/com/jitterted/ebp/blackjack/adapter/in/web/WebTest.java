@@ -1,12 +1,14 @@
 package com.jitterted.ebp.blackjack.adapter.in.web;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
 public class WebTest {
@@ -28,10 +30,16 @@ public class WebTest {
     }
 
     @Test
-    @Disabled
     public void testWhenHitIsDoneWeGetARedirect() throws Exception {
+        mockMvc.perform(post("/start-game"));
         mockMvc.perform(post("/hit"))
-               .andExpect(status().is3xxRedirection())
-               .andExpect(redirectedUrl("/game"));
+               .andExpect(status().is3xxRedirection());
+    }
+
+    @Test
+    public void testWhenDone() throws Exception {
+        mockMvc.perform(post("/start-game"));
+        mockMvc.perform(get("/done"))
+               .andExpect(status().isOk());
     }
 }

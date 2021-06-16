@@ -49,4 +49,41 @@ public class BlackjackControllerTest {
         blackjackController.hitCommand();
         assertThat(game.playerHand().cards()).hasSize(3);
     }
+
+    @Test
+    void testThatWeAreDoneWhenPlayerBusts() {
+        Game game = new Game(
+            new StubDeck(
+                List.of(
+                    new Card(Suit.CLUBS, Rank.QUEEN),
+                    new Card(Suit.CLUBS, Rank.THREE),
+                    new Card(Suit.HEARTS, Rank.KING),
+                    new Card(Suit.SPADES, Rank.TEN),
+                    new Card(Suit.HEARTS, Rank.TEN))));
+
+        BlackjackController blackjackController =
+            new BlackjackController(() -> game);
+        blackjackController.startGame();
+
+        String result = blackjackController.hitCommand();
+        assertThat(result).isEqualTo("redirect:/done");
+    }
+
+
+    @Test
+    void testWhenDoneIsCalled() {
+        Game game = new Game();
+        BlackjackController blackjackController =
+            new BlackjackController(() -> game);
+        blackjackController.startGame();
+        Model model = new ConcurrentModel();
+//        blackjackController.gameDone(model);
+//        GameView gameView = (GameView) model.getAttribute("gameView");
+//        assertThat(gameView).isNotNull();
+//        assertThat(gameView.getDealerCards()).containsExactly("3♣", "10♠");
+//        assertThat(gameView.getPlayerCards()).containsExactly("Q♣", "K♥");
+//        String outcome = (String) model.getAttribute("outcome");
+//        assertThat(outcome).isEqualTo("PLAYER_WINS");
+
+    }
 }
