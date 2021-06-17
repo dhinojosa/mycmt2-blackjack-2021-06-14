@@ -1,18 +1,29 @@
 package com.jitterted.ebp.blackjack.domain;
 
+import com.jitterted.ebp.blackjack.domain.port.GameMonitor;
+
+import java.util.Objects;
+
 public class Game {
 
     private final Deck deck;
     private final Hand dealerHand = new Hand();
     private final Hand playerHand = new Hand();
+    private final GameMonitor gameMonitor;
     private boolean playerDone;
 
     public Game() {
-        deck = new Deck();
+        this(new Deck(), new DoNothingGameMonitor());
     }
 
     public Game(Deck deck) {
+        this(deck, new DoNothingGameMonitor());
+    }
+
+    public Game(Deck deck, GameMonitor gameMonitor) {
+        Objects.requireNonNull(gameMonitor, "Game Monitor cannot be null");
         this.deck = deck;
+        this.gameMonitor = gameMonitor;
     }
 
     public void initialDeal() {
