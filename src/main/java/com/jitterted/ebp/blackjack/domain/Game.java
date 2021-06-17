@@ -26,6 +26,10 @@ public class Game {
         this.gameMonitor = gameMonitor;
     }
 
+    public Game(GameMonitor gameMonitor) {
+        this(new Deck(), gameMonitor);
+    }
+
     public void initialDeal() {
         dealRoundOfCards();
         dealRoundOfCards();
@@ -82,6 +86,7 @@ public class Game {
 
     public void playerStands() {
         playerDone = true;
+        gameMonitor.roundCompleted(this);
     }
 
     public boolean isPlayerDone() {
