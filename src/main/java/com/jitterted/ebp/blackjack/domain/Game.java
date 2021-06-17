@@ -37,8 +37,12 @@ public class Game {
 
     private void dealRoundOfCards() {
         // why: players first because this is the rule
-        playerHand.drawFrom(deck());
+        playerHand.drawFrom(deck);
         dealerHand.drawFrom(deck);
+        if (playerHand.hasBlackJack()) {
+            playerDone = true;
+            gameMonitor.roundCompleted(this);
+        }
     }
 
     public GameOutcome determineOutcome() {
@@ -60,11 +64,12 @@ public class Game {
     public void dealerTurn() {
         // Dealer makes its choice automatically based on a simple heuristic
         // (<=16 must hit, =>17 must stand)
-        if (!playerHand.isBusted()) {
+        if (!playerHand.isBusted() && !playerHand.hasBlackJack()) {
             while (dealerHand.dealerMustDrawCard()) {
                 dealerHand.drawFrom(deck);
             }
         }
+        gameMonitor.roundCompleted(this);
     }
 
     public Deck deck() {
@@ -81,12 +86,16 @@ public class Game {
 
     public void playerHits() {
         playerHand.drawFrom(deck);
-        playerDone = playerHand.isBusted();
+        System.out.println(playerHand);
+        if (playerHand.isBusted()) {
+            playerDone = true;
+            gameMonitor.roundCompleted(this);
+        }
     }
 
     public void playerStands() {
         playerDone = true;
-        gameMonitor.roundCompleted(this);
+        dealerTurn();
     }
 
     public boolean isPlayerDone() {
