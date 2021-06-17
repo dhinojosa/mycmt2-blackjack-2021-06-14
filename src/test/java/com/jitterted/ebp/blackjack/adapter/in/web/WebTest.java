@@ -42,4 +42,11 @@ public class WebTest {
         mockMvc.perform(get("/done"))
                .andExpect(status().isOk());
     }
+
+    @Test
+    public void postToStandEndpointReturnsRedirection() throws Exception {
+        mockMvc.perform(post("/start-game"));
+        mockMvc.perform(post("/stand"))
+               .andExpect(status().is3xxRedirection());
+    }
 }

@@ -92,4 +92,34 @@ public class BlackjackControllerTest {
         String outcome = (String) model.getAttribute("outcome");
         assertThat(outcome).isEqualTo("PLAYER_BUSTED");
     }
+
+    @Test
+    public void standCommandResultsInGamePlayerIsDoneAndRedirectsToDone() throws Exception {
+        Game game = new Game(new Deck());
+        BlackjackController blackjackController = new BlackjackController(() -> game);
+        blackjackController.startGame();
+
+        String redirectPage = blackjackController.standCommand();
+
+        assertThat(redirectPage)
+            .isEqualTo("redirect:/done");
+
+        assertThat(game.isPlayerDone())
+            .isTrue();
+    }
+
+    @Test
+    public void standResultsInDealerDrawingCardForTheirTurn() throws Exception {
+        Deck dealerDrawsCardDeck = new StubDeck(Rank.TEN,  Rank.QUEEN,
+            Rank.NINE, Rank.FIVE,
+            Rank.SIX);
+        Game game = new Game(dealerDrawsCardDeck);
+        BlackjackController blackjackController = new BlackjackController(() -> game);
+        blackjackController.startGame();
+
+        blackjackController.standCommand();
+
+        assertThat(game.dealerHand().cards())
+            .hasSize(3);
+    }
 }
