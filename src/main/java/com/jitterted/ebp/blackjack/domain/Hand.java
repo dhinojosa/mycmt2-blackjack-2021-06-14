@@ -17,7 +17,7 @@ public class Hand {
         return cards;
     }
 
-    private int value() {
+    public int value() {
         int handValue = cards
             .stream()
             .mapToInt(Card::rankValue)
